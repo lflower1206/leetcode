@@ -1,4 +1,3 @@
-const TARGET = 0;
 const moveToNonDuplicateIndex = (
   input: number[],
   currentIndex: number,
@@ -16,43 +15,44 @@ const moveToNonDuplicateIndex = (
 
   return nonDuplicateIndex;
 };
-const threeSum = (input: number[]): number[][] => {
-  const result = new Set<string>();
+const threeSumClosest = (input: number[], target: number): number => {
   const sortedInput = input.slice().sort((a, b) => a - b);
   const lastStartIndex = input.length - 2;
   let firstIndex = 0;
   let secondIndex = 0;
   let thirdIndex = 0;
+  let diff = Number.POSITIVE_INFINITY;
+  let closestSum = 0;
+  let tempSum = 0;
+  let tempDiff = 0;
 
   while (firstIndex < lastStartIndex) {
     secondIndex = firstIndex + 1;
     thirdIndex = sortedInput.length - 1;
 
     while (secondIndex < thirdIndex) {
-      const sum =
+      tempSum =
         sortedInput[firstIndex] +
         sortedInput[secondIndex] +
         sortedInput[thirdIndex];
+      tempDiff = Math.abs(target - tempSum);
 
-      if (sum === TARGET) {
-        result.add(
-          JSON.stringify([
-            sortedInput[firstIndex],
-            sortedInput[secondIndex],
-            sortedInput[thirdIndex],
-          ])
-        );
-        secondIndex = moveToNonDuplicateIndex(sortedInput, secondIndex, 1);
-        thirdIndex = moveToNonDuplicateIndex(sortedInput, thirdIndex, -1);
-      } else {
-        sum < TARGET ? secondIndex++ : thirdIndex--;
+      if (diff > tempDiff) {
+        diff = tempDiff;
+        closestSum = tempSum;
       }
+
+      tempSum < target ? secondIndex++ : thirdIndex--;
+    }
+
+    if (diff === 0) {
+      break;
     }
 
     firstIndex = moveToNonDuplicateIndex(sortedInput, firstIndex, 1);
   }
 
-  return JSON.parse(`[${Array.from(result).join(',')}]`);
+  return closestSum;
 };
 
-export default threeSum;
+export default threeSumClosest;
