@@ -2,7 +2,7 @@ const escape = require('shell-quote').quote;
 
 /* eslint-disable */
 module.exports = {
-  '*.{ts}': (filenames) => {
+  '*.ts': (filenames) => {
     const escapedFileNames = filenames
       .map((filename) => `${escape([filename])}`)
       .join(' ');
