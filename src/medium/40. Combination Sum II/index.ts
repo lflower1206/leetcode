@@ -16,25 +16,26 @@ const backtracking = (
   }
 
   for (
-    let elementIndex = currentIndex;
-    elementIndex < candidates.length;
-    elementIndex++
+    let candidateIndex = currentIndex;
+    candidateIndex < candidates.length;
+    candidateIndex++
   ) {
+    const currentCandidate = candidates[candidateIndex];
+
     if (
-      elementIndex > currentIndex &&
-      candidates[elementIndex] === candidates[elementIndex - 1]
+      candidateIndex > currentIndex &&
+      currentCandidate === candidates[candidateIndex - 1]
     ) {
       continue;
     }
 
-    const currentCandidate = candidates[elementIndex];
     currentCombo.push(currentCandidate);
     currentSum += currentCandidate;
 
     backtracking(
       candidates,
       target,
-      elementIndex + 1,
+      candidateIndex + 1,
       currentSum,
       currentCombo,
       result
@@ -44,6 +45,7 @@ const backtracking = (
     currentSum -= currentCandidate;
   }
 };
+
 const combinationSum2 = (candidates: number[], target: number): number[][] => {
   const result: number[][] = [];
   const currentCombo: number[] = [];
