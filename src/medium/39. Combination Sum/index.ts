@@ -16,27 +16,29 @@ const backtracking = (
   }
 
   for (
-    let elementIndex = currentIndex;
-    elementIndex < candidates.length;
-    elementIndex++
+    let candidateIndex = currentIndex;
+    candidateIndex < candidates.length;
+    candidateIndex++
   ) {
-    const currentElement = candidates[elementIndex];
-    currentCombo.push(currentElement);
-    currentSum += currentElement;
+    const currentCandidate = candidates[candidateIndex];
+
+    currentCombo.push(currentCandidate);
+    currentSum += currentCandidate;
 
     backtracking(
       candidates,
       target,
-      elementIndex,
+      candidateIndex,
       currentSum,
       currentCombo,
       result
     );
 
-    currentSum -= currentElement;
     currentCombo.pop();
+    currentSum -= currentCandidate;
   }
 };
+
 const combinationSum = (candidates: number[], target: number): number[][] => {
   const result: number[][] = [];
   const currentCombo: number[] = [];
