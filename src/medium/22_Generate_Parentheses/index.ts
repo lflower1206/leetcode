@@ -1,47 +1,58 @@
-interface GenerateParams {
-  input: string;
+interface DfsParams {
   parenthesis: string[];
+  leftCount: number;
+  rightCount: number;
+  currentGeneratedParenthesis: string;
   length: number;
-  pairLength: number;
-  stackSize: number;
+  totalLength: number;
 }
-const generate = (params: GenerateParams): void => {
-  const { input, parenthesis, length, pairLength, stackSize } = params;
+const dfs = (params: DfsParams): void => {
+  const {
+    parenthesis,
+    leftCount,
+    rightCount,
+    currentGeneratedParenthesis,
+    length,
+    totalLength,
+  } = params;
 
-  if (stackSize < 0 || input.length > pairLength) {
+  if (currentGeneratedParenthesis.length === totalLength) {
+    parenthesis.push(currentGeneratedParenthesis);
     return;
   }
 
-  if (stackSize === 0 && input.length === pairLength) {
-    parenthesis.push(input);
-    return;
+  if (leftCount < length) {
+    dfs({
+      parenthesis,
+      leftCount: leftCount + 1,
+      rightCount,
+      currentGeneratedParenthesis: `${currentGeneratedParenthesis}(`,
+      length,
+      totalLength,
+    });
   }
 
-  generate({
-    input: `${input}(`,
-    length,
-    pairLength,
-    parenthesis,
-    stackSize: stackSize + 1,
-  });
-
-  generate({
-    input: `${input})`,
-    length,
-    pairLength,
-    parenthesis,
-    stackSize: stackSize - 1,
-  });
+  if (rightCount < leftCount) {
+    dfs({
+      parenthesis,
+      leftCount,
+      rightCount: rightCount + 1,
+      currentGeneratedParenthesis: `${currentGeneratedParenthesis})`,
+      length,
+      totalLength,
+    });
+  }
 };
 const generateParenthesis = (length: number): string[] => {
   const parenthesis: string[] = [];
 
-  generate({
-    input: '',
-    length,
-    pairLength: length * 2,
+  dfs({
     parenthesis,
-    stackSize: 0,
+    leftCount: 0,
+    rightCount: 0,
+    currentGeneratedParenthesis: '',
+    length,
+    totalLength: length * 2,
   });
 
   return parenthesis;
