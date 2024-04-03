@@ -1,25 +1,25 @@
 const longestConsecutive = (nums: number[]): number => {
-  if (nums.length <= 1) {
-    return nums.length;
-  }
+  const map = new Map<number, boolean>(
+    nums.map((num) => {
+      return [num, true];
+    })
+  );
 
-  const sorted = Array.from(new Set(nums)).sort((a, b) => a - b);
-  let result = 1;
-  let index = 0;
+  let result = 0;
 
-  while (index < sorted.length) {
-    const start = sorted[index];
-    let end = start;
-    let times = 0;
+  Array.from(map.keys()).forEach((num) => {
+    let currentNum = num;
+    let currentCount = 0;
 
-    while (Math.abs(end - start) === times) {
-      times++;
-      index++;
-      end = sorted[index];
+    if (!map.has(currentNum - 1)) {
+      while (map.has(currentNum)) {
+        currentNum++;
+        currentCount++;
+      }
     }
 
-    result = Math.max(result, times);
-  }
+    result = Math.max(result, currentCount);
+  });
 
   return result;
 };
