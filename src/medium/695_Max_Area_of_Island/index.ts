@@ -6,7 +6,7 @@ interface BfsParams {
   result: [number];
 }
 
-const bfs = (params: BfsParams): void => {
+const dfs = (params: BfsParams): void => {
   const { grid, rowIndex, columnIndex, counter, result } = params;
   const rowLength = grid.length;
   const columnLength = grid[0].length;
@@ -25,28 +25,28 @@ const bfs = (params: BfsParams): void => {
   counter[0] = counter[0] + 1;
   result[0] = Math.max(result[0], counter[0]);
 
-  bfs({
+  dfs({
     grid,
     rowIndex: rowIndex + 1,
     columnIndex,
     counter,
     result,
   });
-  bfs({
+  dfs({
     grid,
     rowIndex: rowIndex - 1,
     columnIndex,
     counter,
     result,
   });
-  bfs({
+  dfs({
     grid,
     rowIndex,
     columnIndex: columnIndex + 1,
     counter,
     result,
   });
-  bfs({
+  dfs({
     grid,
     rowIndex,
     columnIndex: columnIndex - 1,
@@ -66,7 +66,7 @@ const maxAreaOfIsland = (grid: number[][]): number => {
       if (grid[rowIndex][columnIndex] === 1) {
         const counter: [number] = [0];
 
-        bfs({
+        dfs({
           grid,
           rowIndex,
           columnIndex,
