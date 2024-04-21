@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
-  "packageManager": "pnpm@9.0.1",
+  "packageManager": "pnpm@9.0.4",
   "scripts": {
     "lint": "lint-staged",
     "prepare": "husky install",
